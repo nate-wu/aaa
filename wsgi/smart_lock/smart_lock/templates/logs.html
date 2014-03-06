@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Entrance Log</h2>
+{% if logs %}
+    <table class="ui table segment">
+        <thead>
+         <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Time</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for log in logs %}
+        <tr>
+            <td>{{ log.id }}</td>
+            <td>{{ log.user.name }}</td>
+            <td>{{ log.time }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+<div class="ui icon message">
+      <i class="help icon"></i>
+      <div class="content">
+        <div class="header">
+          No Logs are available.
+        </div>
+        <p></p>
+      </div>
+    </div>
+
+
+{% endif %}
+<div class="pagination">
+    <span class="step-links">
+        {% if logs.has_previous %}
+            <a href="?page={{ logs.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ logs.number }} of {{ logs.paginator.num_pages }}.
+        </span>
+
+        {% if logs.has_next %}
+            <a href="?page={{ logs.next_page_number }}">Next</a>
+        {% endif %}
+    </span>
+</div>
+<!--
+<a href="/demo">Return to Index</a>-->
+
+{% endblock %}

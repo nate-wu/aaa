@@ -10,8 +10,17 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+import sys
+import urlparse
+#BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
+ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
+
+if ROOT_PATH not in sys.path:
+    sys.path.append(ROOT_PATH)
+
+PROJECT_DIR = os.path.dirname(os.path.realpath(__file__))
+PROJECT_DIRNAME = PROJECT_DIR.split(os.sep)[-1]
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
@@ -20,6 +29,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = '28^-72ukrh-^+ou!x%3fsk8e65r4$0=s)w%m-cidxg3w$zcd*y'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+#EBUG = True
+
 DEBUG = True
 
 TEMPLATE_DEBUG = True
@@ -48,25 +59,31 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
+ROOT_URLCONF = 'urls'
 
-ROOT_URLCONF = 'smart_lock.urls'
-
-WSGI_APPLICATION = 'smart_lock.wsgi.application'
-
+# Additional locations of static files
+STATICFILES_DIRS = (
+    os.path.join(ROOT_PATH, 'static'),
+    # Put strings here, like "/home/html/static" or "C:/www/django/static".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+)
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
+url = urlparse.urlparse(os.environ.get('OPENSHIFT_MYSQL_DB_URL'))
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'smart_lock',
-        'USER': 'root',
-        'PASSWORD': 'P@ssW0rd',
-        'HOST': '',
-        'PORT': '',
+        'NAME': os.environ['OPENSHIFT_APP_NAME'],
+        'USER': url.username,
+        'PASSWORD': url.password,
+        'HOST': url.hostname,
+        'PORT': url.port,
     }
 }
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
@@ -85,9 +102,22 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
+STATIC_ROOT = os.path.abspath(os.path.join(ROOT_PATH, '..', 'static'))
+
 STATIC_URL = '/static/'
 
-TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'django.contrib.auth.context_processors.auth',
+    'django.contrib.messages.context_processors.messages',
+)
+
+
+
+TEMPLATE_DIRS = (os.path.join(PROJECT_DIR, "templates"),)
 
 GCM_APIKEY = 'AIzaSyBMTFe5NR9OxSnUz6HjZv5UBREQPQGfw1o'
 GCM_DEVICE_MODEL = 'demo.models.MyDevice'
