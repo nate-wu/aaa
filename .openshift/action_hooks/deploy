@@ -6,9 +6,9 @@
 
 source $OPENSHIFT_HOMEDIR/python/virtenv/bin/activate
 
-echo "Executing 'python $OPENSHIFT_REPO_DIR/wsgi/smart_lock/smart_lock/manage.py syncdb --noinput'"
-python "$OPENSHIFT_REPO_DIR"wsgi/smart_lock/smart_lock/manage.py syncdb --noinput
-python "$OPENSHIFT_REPO_DIR"wsgi/smart_lock/smart_lock/manage.py runserver 0.0.0.0:3344
+#echo "Executing 'python $OPENSHIFT_REPO_DIR/wsgi/smart_lock/smart_lock/manage.py syncdb --noinput'"
+#python "$OPENSHIFT_REPO_DIR"wsgi/smart_lock/smart_lock/manage.py syncdb --noinput
+#python "$OPENSHIFT_REPO_DIR"wsgi/smart_lock/smart_lock/manage.py runserver 0.0.0.0:3344
 
 #echo "Executing 'python $OPENSHIFT_REPO_DIR/wsgi/openshift/manage.py collectstatic --noinput'"
 #python "$OPENSHIFT_REPO_DIR"wsgi/openshift/manage.py collectstatic --noinput
