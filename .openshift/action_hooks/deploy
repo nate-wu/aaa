@@ -13,6 +13,5 @@ then
 
     echo "Run Develop Server in background ...."
     python "$OPENSHIFT_REPO_DIR"wsgi/smart_lock/smart_lock/manage.py runserver 0.0.0.0:3344 &
-    bg
-    disown -h
+    disown %1
 fi
