@@ -12,7 +12,7 @@ then
     python "$OPENSHIFT_REPO_DIR"wsgi/smart_lock/smart_lock/manage.py syncdb --noinput
 
     echo "Run Develop Server in background ...."
-    python "$OPENSHIFT_REPO_DIR"wsgi/smart_lock/smart_lock/manage.py runserver 0.0.0.0:3344 &
+    python "$OPENSHIFT_REPO_DIR"wsgi/smart_lock/smart_lock/manage.py runserver 0.0.0.0:3435 &
     jobs
     disown %1
 fi
