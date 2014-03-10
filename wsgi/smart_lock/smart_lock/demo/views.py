@@ -119,7 +119,7 @@ def entrance(request, imei):
         for admin in admins:
             print "IMEI: %s " % admin.imei
             notification = get_device_model().objects.get(dev_id=admin.imei)
-            notification.send_message("%s went home." % user.name)
+            notification.send_message("%s is home." % user.name)
         return HttpResponse("Hello, %s." % user.name)
     else:
         entrance_log = EntranceLog(user_id='1', time=timestamp)
