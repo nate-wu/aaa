@@ -6,6 +6,7 @@
 
 source $OPENSHIFT_HOMEDIR/python/virtenv/bin/activate
 
+
 if [ -f $OPENSHIFT_HOMEDIR/mysql/LICENSE ]
 then
     echo "Executing 'python $OPENSHIFT_REPO_DIR/wsgi/smart_lock/smart_lock/manage.py syncdb --noinput'"
@@ -16,3 +17,6 @@ then
     jobs
     disown %1
 fi
+
+echo "Executing 'python $OPENSHIFT_REPO_DIR/wsgi/smart_lock/smart_lock/manage.py collectstatic --noinput'"
+python "$OPENSHIFT_REPO_DIR"wsgi/smart_lock/smart_lock/manage.py collectstatic --noinput
